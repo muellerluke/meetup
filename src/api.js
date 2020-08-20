@@ -1,97 +1,110 @@
-async function getEvents(lat, lon, page) {
-  return {
-    city: {
-      id: 53090,
-      city: "West Bend",
-      lat: 43.45,
-      lon: -88.17,
-      state: "WI",
-      country: "us",
-      zip: "53090",
-      member_count: 160,
-    },
-    events: [
+import { mockEvents } from "./mock-events";
+import axios from "axios";
+
+async function getSuggestions(query) {
+  if (window.location.href.startsWith("http://localhost")) {
+    return [
       {
-        local_time: "08:30",
-        local_date: "2020-08-22",
-        link:
-          "https://www.meetup.com/LAKECOUNTRYFRIENDS50s/events/nrbpbrybclbdc/",
-        visibility: "public_limited",
-        group: {
-          created: 1385973005000,
-          name: "LAKE COUNTRY FRIENDS 50+",
-          id: 11308642,
-          join_mode: "approval",
-          lat: 43.08000183105469,
-          lon: -88.26000213623047,
-          urlname: "LAKECOUNTRYFRIENDS50s",
-          who: "LAKE COUNTRY FRIENDS 50+",
-          localized_location: "Pewaukee, WI",
-          state: "WI",
-          country: "us",
-          region: "en_US",
-          timezone: "US/Central",
-        },
-        waitlist_count: 0,
-        yes_rsvp_count: 3,
-        duration: 7200000,
-        time: 1598103000000,
-        utc_offset: -18000000,
-        name:
-          "Paved trail hike begins in Lapham Peak State Park at 8:30 AM and breakfast ",
-        id: "nrbpbrybclbdc",
+        city: "Munich",
+        country: "de",
+        localized_country_name: "Germany",
+        name_string: "Munich, Germany",
+        zip: "meetup3",
+        lat: 48.14,
+        lon: 11.58,
       },
       {
-        created: 1596900757000,
-        duration: 10800000,
-        id: "272446751",
-        name:
-          "Basic Fire Making and Lunch Discussion on COVID Lessons Learned ",
-        date_in_series_pattern: false,
-        status: "upcoming",
-        time: 1600531200000,
-        local_date: "2020-09-19",
-        local_time: "11:00",
-        updated: 1597063065000,
-        utc_offset: -18000000,
-        waitlist_count: 0,
-        yes_rsvp_count: 3,
-        venue: {
-          id: 26966305,
-          name: "4399 Pleasant Hill Rd",
-          lat: 43.265785217285156,
-          lon: -88.25642395019531,
-          repinned: false,
-          address_1: "4399 Pleasant Hill Rd",
-          city: "Richfield",
-          country: "us",
-          localized_country_name: "USA",
-          zip: "53076",
-          state: "WI",
-        },
-        is_online_event: false,
-        group: {
-          created: 1596897266000,
-          name: "Southeastern Wisconsin Resilience and Preparedness Group",
-          id: 34068978,
-          join_mode: "open",
-          lat: 43.22999954223633,
-          lon: -88.25,
-          urlname: "Southeastern-Wisconsin-Resilience-and-Preparedness-Group",
-          who: "Members",
-          localized_location: "Hubertus, WI",
-          state: "WI",
-          country: "us",
-          region: "en_US",
-          timezone: "US/Central",
-        },
-        link:
-          "https://www.meetup.com/Southeastern-Wisconsin-Resilience-and-Preparedness-Group/events/272446751/",
-        description:
-          "<p>Basic Fire Making and Lunch Discussion on COVID Lessons Learned</p> <p>When is the last time you built a fire? Come and learn some basic fire building techniques for free. We will show you how to build a few types of fire and give you a chance build one yourself. We will also demonstrate a Rocket Stove. All are welcome and attendees are encouraged to bring their ideas, knowledge and any examples they wish to share or display.</p> <p>The fire building class will last about an hour and be followed by lunch where we will discuss various lessons learned since COVID. When COVID first started all predictions were extremely dire, and it provided a dry run for individual and family resilience preparedness. What did you learn, what did you do well and not so well? We will discuss. Lunch, sub sandwiches will be provided, so please RSVP so that we know how much we will need.</p> <p>Also, due to COVID, and many of the existing restrictions, this meeting will be held in a public park with an overhead shelter (locations 21 and 23 on the inset map). It is open to the wind however so dress appropriately, we will conduct the meeting rain or shine.</p> <p>This meeting is hosted by Paul and Kurt and is reserved under the name of Camping Club at the Richfield Historical Park &amp; Nature Park<br/>4399 Pleasant Hill Road Richfield, WI 53076 on Saturday, September 19th, 2020 from 11 am until 3 pm.</p> <p><a href='http://richfieldhistoricalsociety.org/map_and_directions.html' class='linkified'>http://richfieldhistoricalsociety.org/map_and_directions.html</a></p> <p><a href='https://www.google.com/maps/place/Richfield+Historical+Park/@43.262872,-88.2589512,15z/data=!4m5!3m4!1s0x0:0x632c132420c9ea6d!8m2!3d43.2657471!4d-88.2564192' class='linkified'>https://www.google.com/maps/place/Richfield+Historical+Park/@43.262872,-88.2589512,15z/data=!4m5!3m4!1s0x0:0x632c132420c9ea6d!8m2!3d43.2657471!4d-88.2564192</a></p> <p>Any questions feel free to contact: PB, [masked]</p> <p>WHAT: Free Fire Building Class, Lunch, and COVID Lessons Learned Discussion</p> <p>WHEN: Saturday, September 19th 11 am to 3pm</p> <p>WHO: You and anyone you would like to bring</p> <p>WHERE: Richfield Historical Park &amp; Nature Park<br/>Location 21 and 23 on the inset map<br/>4399 Pleasant Hill Road<br/>Richfield, WI 53076</p> <p>Historical: 33 Acre Park<br/>Nature: 92 Acre Park<br/>Features Include:<br/>Picnic Tables<br/>Public Restrooms<br/>Shelter<br/>Observation Deck</p> ",
-        visibility: "public",
-        member_pay_fee: false,
+        city: "Munich",
+        country: "us",
+        localized_country_name: "USA",
+        state: "ND",
+        name_string: "Munich, North Dakota, USA",
+        zip: "58352",
+        lat: 48.66,
+        lon: -98.85,
       },
-    ],
-  };
+    ];
+  }
+
+  const token = await getAccessToken();
+  if (token) {
+    const url =
+      "https://api.meetup.com/find/locations?&sign=true&photo-host=public&query=" +
+      query +
+      "&access_token=" +
+      token;
+    const result = await axios.get(url);
+    return result.data;
+  }
+  return [];
 }
+
+async function getEvents(lat, lon) {
+  if (window.location.href.startsWith("http://localhost")) {
+    return mockEvents.events;
+  }
+  const token = await getAccessToken();
+  if (token) {
+    let url =
+      "https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public" +
+      "&access_token=" +
+      token;
+    // lat, lon is optional; if you have a lat and lon, you can add them
+    //if (lat && lon) {
+    // url += "&lat=" + lat + "&lon=" + lon;
+    // }
+    const result = await axios.get(url);
+    return result.data.events;
+  }
+}
+
+async function getAccessToken() {
+  const accessToken = localStorage.getItem("access_token");
+  if (!accessToken) {
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code");
+
+    if (!code) {
+      window.location.href =
+        "https://secure.meetup.com/oauth2/authorize?client_id=29f2e4gtqdgcvq829jg5jo38qs&response_type=code&redirect_uri=https://muellerluke.github.io/meetup/";
+      return null;
+    }
+    return getOrRenewAccessToken("get", code);
+  }
+  const lastSavedTime = localStorage.getItem("last_saved_time");
+
+  if (accessToken && Date.now() - lastSavedTime < 3600000) {
+    return accessToken;
+  } else if (accessToken && Date.now() - lastSavedTime > 3600000) {
+    const refreshToken = localStorage.getItem("refresh_token");
+    return getOrRenewAccessToken("renew", refreshToken);
+  }
+}
+
+async function getOrRenewAccessToken(type, key) {
+  let url;
+  if (type === "get") {
+    // Lambda endpoint to get token by code
+    url =
+      "https://cwchc3wu5f.execute-api.us-east-1.amazonaws.com/dev/api/token/" +
+      key;
+  } else if (type === "renew") {
+    // Lambda endpoint to get token by refresh_token
+    url =
+      "https://cwchc3wu5f.execute-api.us-east-1.amazonaws.com/dev/api/refresh/" +
+      key;
+  }
+
+  // Use Axios to make a GET request to the endpoint
+  const tokenInfo = await axios.get(url);
+
+  // Save tokens to localStorage together with a timestamp
+  localStorage.setItem("access_token", tokenInfo.data.access_token);
+  localStorage.setItem("refresh_token", tokenInfo.data.refresh_token);
+  localStorage.setItem("last_saved_time", Date.now());
+
+  // Return the access_token
+  return tokenInfo.data.access_token;
+}
+
+export { getSuggestions, getEvents, getAccessToken };

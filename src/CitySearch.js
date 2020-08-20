@@ -1,41 +1,25 @@
 import React, { Component } from "react";
+import { getSuggestions } from "./api";
 
 class CitySearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: "Munich",
-      suggestions: [
-        {
-          city: "Munich",
-          country: "de",
-          localized_country_name: "Germany",
-          name_string: "Munich, Germany",
-          zip: "meetup3",
-          lat: 48.14,
-          lon: 11.58,
-        },
-        {
-          city: "Munich",
-          country: "us",
-          localized_country_name: "USA",
-          state: "ND",
-          name_string: "Munich, North Dakota, USA",
-          zip: "58352",
-          lat: 48.66,
-          lon: -98.85,
-        },
-      ],
+      query: "",
+      suggestions: [],
     };
+    // this.updateEvents = this.updateEvents.bind(this);
   }
 
   handleInputChanged = (event) => {
     const value = event.target.value;
     this.setState({ query: value });
+    getSuggestions(value).then((suggestions) => this.setState({ suggestions }));
   };
 
-  handleItemClicked = (value) => {
+  handleItemClicked = (value, lon, lat) => {
     this.setState({ query: value, suggestions: [] });
+    this.props.updateEvents(lon, lat);
   };
 
   componentDidMount() {
@@ -57,7 +41,9 @@ class CitySearch extends Component {
           {this.state.suggestions.map((item) => (
             <li
               key={item.name_string}
-              onClick={() => this.handleItemClicked(item.name_string)}
+              onClick={() =>
+                this.handleItemClicked(item.name_string, item.lon, item.lat)
+              }
             >
               {item.name_string}
             </li>

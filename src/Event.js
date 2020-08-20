@@ -17,6 +17,7 @@ class Event extends Component {
     return (
       <div className="Event">
         <div className="event-Overview">
+          <p className="event-Overview_title">{this.props.event.name}</p>
           <p className="event-Overview_time">{this.props.event.local_time}</p>
           <p className="event-Overview_date">{this.props.event.local_date}</p>
         </div>
