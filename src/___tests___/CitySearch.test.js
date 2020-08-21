@@ -6,7 +6,7 @@ describe("<CitySearch /> component", () => {
   let CitySearchWrapper;
 
   beforeAll(() => {
-    CitySearchWrapper = shallow(<CitySearch />);
+    CitySearchWrapper = shallow(<CitySearch updateEvents={() => {}} />);
   });
 
   test("render text input", () => {
@@ -77,7 +77,7 @@ describe("<CitySearch /> integration", () => {
   let CitySearchWrapper;
 
   beforeAll(() => {
-    CitySearchWrapper = shallow(<CitySearch />);
+    CitySearchWrapper = shallow(<CitySearch updateEvents={() => {}} />);
   });
 
   test("get a list of cities when user searches for Munich", async () => {

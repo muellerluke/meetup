@@ -29,7 +29,7 @@ async function getSuggestions(query) {
   const token = await getAccessToken();
   if (token) {
     const url =
-      "https://api.meetup.com/find/locations?&sign=true&photo-host=public&query=" +
+      "https://cors-anywhere.herokuapp.com/https://api.meetup.com/find/locations?&sign=true&photo-host=public&query=" +
       query +
       "&access_token=" +
       token;
@@ -39,20 +39,31 @@ async function getSuggestions(query) {
   return [];
 }
 
-async function getEvents(lat, lon) {
+async function getEvents(lat, lon, page) {
   if (window.location.href.startsWith("http://localhost")) {
-    return mockEvents.events;
+    let events2 = [];
+    if (page === null) {
+      events2 = mockEvents.events;
+    } else {
+      for (let i = 0; i < page; i++) {
+        if (i < 2) events2.push(mockEvents.events[i]);
+      }
+    }
+    return events2;
   }
   const token = await getAccessToken();
   if (token) {
     let url =
-      "https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public" +
+      "https://cors-anywhere.herokuapp.com/https://api.meetup.com/find/upcoming_events?&sign=true&photo-host=public" +
       "&access_token=" +
       token;
     // lat, lon is optional; if you have a lat and lon, you can add them
-    //if (lat && lon) {
-    // url += "&lat=" + lat + "&lon=" + lon;
-    // }
+    if (lat && lon) {
+      url += "&lat=" + lat + "&lon=" + lon;
+    }
+    if (page) {
+      url += "&page=" + page;
+    }
     const result = await axios.get(url);
     return result.data.events;
   }
@@ -97,7 +108,7 @@ async function getOrRenewAccessToken(type, key) {
 
   // Use Axios to make a GET request to the endpoint
   const tokenInfo = await axios.get(url);
-
+  console.log(tokenInfo);
   // Save tokens to localStorage together with a timestamp
   localStorage.setItem("access_token", tokenInfo.data.access_token);
   localStorage.setItem("refresh_token", tokenInfo.data.refresh_token);

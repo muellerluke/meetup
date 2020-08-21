@@ -25,6 +25,7 @@ class CitySearch extends Component {
   componentDidMount() {
     if (this.state.query === "") {
       // console.log("here");
+      this.props.updateEvents(null, null, null);
     }
   }
 
