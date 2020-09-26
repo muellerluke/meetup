@@ -20,9 +20,7 @@ class App extends Component {
     } else {
       getEvents(this.state.lat, this.state.lon, this.state.page).then(
         (response) => {
-          if (this.is_mounted) {
-            this.setState({ events: response });
-          }
+          this.setState({ events: response });
         }
       );
     }

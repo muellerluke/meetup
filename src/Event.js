@@ -3,14 +3,15 @@ import React, { Component } from "react";
 class Event extends Component {
   state = {
     showDetails: false,
+    detailsButtonText: "Details",
     events: [],
   };
 
   handleShowDetails = () => {
     if (this.state.showDetails === false) {
-      this.setState({ showDetails: true });
+      this.setState({ showDetails: true, detailsButtonText: "Close" });
     } else {
-      this.setState({ showDetails: false });
+      this.setState({ showDetails: false, detailsButtonText: "Details" });
     }
   };
   render() {
@@ -32,7 +33,7 @@ class Event extends Component {
           className="event-Details_button"
           onClick={this.handleShowDetails}
         >
-          Details
+          {this.state.detailsButtonText}
         </button>
       </div>
     );
