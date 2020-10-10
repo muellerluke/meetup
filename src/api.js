@@ -3,7 +3,8 @@ import axios from "axios";
 
 async function getSuggestions(query) {
   if (window.location.href.startsWith("http://localhost")) {
-    return [
+    var temp = [];
+    var arr = [
       {
         city: "Munich",
         country: "de",
@@ -24,6 +25,13 @@ async function getSuggestions(query) {
         lon: -98.85,
       },
     ];
+    arr.forEach((stuff) => {
+      if (stuff.name_string.toLowerCase().indexOf(query.toLowerCase()) > -1) {
+        temp.push(stuff);
+      }
+    });
+
+    return temp;
   }
 
   const token = await getAccessToken();
@@ -46,11 +54,22 @@ async function getEvents(lat, lon, page) {
       events2 = mockEvents.events;
     } else {
       for (let i = 0; i < page; i++) {
-        if (i < 2) events2.push(mockEvents.events[i]);
+        console.log(page);
+        try {
+          if (i < page && mockEvents.events[i].id !== null)
+            events2.push(mockEvents.events[i]);
+        } catch {
+          console.log("no id");
+        }
       }
     }
     return events2;
   }
+  if (!navigator.onLine) {
+    const events = localStorage.getItem("lastEvents");
+    return JSON.parse(events);
+  }
+
   const token = await getAccessToken();
   if (token) {
     let url =
@@ -65,7 +84,12 @@ async function getEvents(lat, lon, page) {
       url += "&page=" + page;
     }
     const result = await axios.get(url);
-    return result.data.events;
+    const events = result.data.events;
+    if (events.length) {
+      // Check if the events exist
+      localStorage.setItem("lastEvents", JSON.stringify(events));
+    }
+    return events;
   }
 }
 

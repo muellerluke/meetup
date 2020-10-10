@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getSuggestions } from "./api";
+import { InfoAlert } from "./Alert";
 
 class CitySearch extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class CitySearch extends Component {
     this.state = {
       query: "",
       suggestions: [],
+      infoText: "",
     };
     // this.updateEvents = this.updateEvents.bind(this);
   }
@@ -14,7 +16,26 @@ class CitySearch extends Component {
   handleInputChanged = (event) => {
     const value = event.target.value;
     this.setState({ query: value });
-    getSuggestions(value).then((suggestions) => this.setState({ suggestions }));
+    getSuggestions(value).then((suggestions) => {
+      this.setState({ suggestions });
+      if (value && suggestions.length === 0) {
+        this.setState({
+          infoText:
+            "We can not find the city you are looking for. Please try another city",
+        });
+      } else {
+        if (!navigator.onLine) {
+          this.setState({
+            infoText:
+              "You are offline. Cached events will be displayed until you become online again.",
+          });
+        } else {
+          this.setState({
+            infoText: "",
+          });
+        }
+      }
+    });
   };
 
   handleItemClicked = (value, lon, lat) => {
@@ -50,6 +71,7 @@ class CitySearch extends Component {
             </li>
           ))}
         </ul>
+        <InfoAlert text={this.state.infoText} />
       </div>
     );
   }
